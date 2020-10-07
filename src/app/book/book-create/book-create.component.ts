@@ -54,8 +54,8 @@ export class BookCreateComponent implements OnInit {
         this.authors = authors;
       },
       (error) => {
-        //this.errorHandler.handleError(error);
-        //this.errorMessage = this.errorHandler.errorMessage;
+        this.errorService.dialogConfig = { ...this.dialogConfig };
+        this.errorService.handleError(error);
       }
     );
   };
@@ -67,8 +67,8 @@ export class BookCreateComponent implements OnInit {
         this.subjects = subjects;
       },
       (error) => {
-        //this.errorHandler.handleError(error);
-        //this.errorMessage = this.errorHandler.errorMessage;
+        this.errorService.dialogConfig = { ...this.dialogConfig };
+          this.errorService.handleError(error);
       }
     );
   };

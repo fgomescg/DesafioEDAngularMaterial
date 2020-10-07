@@ -5,5 +5,5 @@ export interface AuthorList {
   totalPages: number;
   pageSize : number;
   currentPage: number;
-  authors: Author;
+  authors: Author[];
 }

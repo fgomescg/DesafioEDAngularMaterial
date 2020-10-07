@@ -1,1 +1,73 @@
-<p>book-update works!</p>
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card fxFlex="500px" fxFlex.xs="100%">
+      <mat-card-title>Cadastro de livro</mat-card-title>
+      <form [formGroup]="bookForm" autocomplete="off" novalidate (ngSubmit)="updateBook(bookForm.value)" fxLayout="column wrap"
+      fxLayoutAlign="center center" fxLayoutGap="10px">
+
+        <mat-card-content>
+          <mat-form-field>
+            <input matInput type="text" placeholder="Título" formControlName="title" id="title">
+            <mat-hint align="end">Insira o título do livro.</mat-hint>
+            <mat-error *ngIf="hasError('title', 'required')">Título é obrigatório.</mat-error>
+            <mat-error *ngIf="hasError('title', 'maxlength')">Tamanho máximo permitido 40 caractéres.</mat-error>
+          </mat-form-field>
+
+           <mat-form-field>
+            <input matInput type="text" placeholder="Editora" formControlName="company" id="company">
+            <mat-hint align="end">Insira a editora.</mat-hint>
+            <mat-error *ngIf="hasError('company', 'required')">Editora é obrigatório.</mat-error>
+            <mat-error *ngIf="hasError('company', 'maxlength')">Tamanho máximo permitido 40 caractéres.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="number" placeholder="Edição" formControlName="edition" id="edition">
+            <mat-hint align="end">Insira a edição do livro.</mat-hint>
+            <mat-error *ngIf="hasError('edition', 'required')">Edição é obrigatório.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="number" min="1500" max={{currentYear}} placeholder="Ano de publicação" formControlName="publishYear" id="publishYear">
+            <mat-hint align="end">Insira o ano de publicação.</mat-hint>
+            <mat-error *ngIf="hasError('publishYear', 'required')">Ano de Publicação é obrigatório.</mat-error>
+            <mat-error *ngIf="hasError('publishYear', 'maxlength')">Tamanho máximo permitido são 4 caractéres.</mat-error>
+            <mat-error *ngIf="hasError('publishYear', 'min')">Ano mínimo 1500.</mat-error>
+            <mat-error *ngIf="hasError('publishYear', 'max')">Ano inválido.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="text" mvndrMatCurrencyFormat placeholder="Valor"
+            [allowNegative]="false"
+            [currencyCode]="'BRL'"
+            [value]="bookValue"
+            (blur)="updateBRLAmount($event)"
+            formControlName="value" id="value">
+
+            <mat-hint align="end">Insira o valor do livro.</mat-hint>
+            <mat-error *ngIf="hasError('value', 'required')">Valor é obrigatório.</mat-error>
+          </mat-form-field>
+
+           <mat-form-field>
+            <mat-label>Autores</mat-label>
+            <mat-select  multiple>
+              <mat-option *ngFor="let author of authors" [value]="author.authorId">{{author.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Assuntos</mat-label>
+            <mat-select  multiple>
+              <mat-option *ngFor="let subject of subjects" [value]="subject.subjectId">{{subject.description}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </mat-card-content>
+        <mat-card-actions>
+          <mat-card-actions align="center">
+            <button mat-raised-button color="primary" [disabled]="!bookForm.valid">Cadastrar</button>
+            <button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
+          </mat-card-actions>
+        </mat-card-actions>
+
+      </form>
+    </mat-card>
+</section>

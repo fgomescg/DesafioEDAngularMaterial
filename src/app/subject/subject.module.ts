@@ -6,10 +6,11 @@ import { SubjectUpdateComponent } from './subject-update/subject-update.componen
 import { SubjectDeleteComponent } from './subject-delete/subject-delete.component';
 import { SubjectRoutingModule } from './subject-routing/subject-routing.module';
 import { MaterialModule } from './../material/material.module';
+import { SubjectDetailsComponent } from './subject-details/subject-details.component';
 
 
 @NgModule({
-  declarations: [SubjectListComponent, SubjectCreateComponent, SubjectUpdateComponent, SubjectDeleteComponent],
+  declarations: [SubjectListComponent, SubjectCreateComponent, SubjectUpdateComponent, SubjectDeleteComponent, SubjectDetailsComponent],
   imports: [
     CommonModule,
     SubjectRoutingModule,

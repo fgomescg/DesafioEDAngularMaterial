@@ -7,6 +7,7 @@ import { BookList } from '../../_interface/book-list';
 import { Book } from '../../_interface/book.model';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { ErrorHandlerService } from '@app/_services/error-handler.service';
 
 @Component({
@@ -17,20 +18,27 @@ import { ErrorHandlerService } from '@app/_services/error-handler.service';
 export class BookListComponent implements OnInit, AfterViewInit {
 
   public errorMessage: string = '';
-  public totalCount : Number;
-  public totalPages: Number;
-  public currentPage : Number = 1;
-  public pageSize : Number = 10;
+  public length : number;
+  public totalPages: number;
+  public currentPage: number = 0;
+  public pageSize : number = 10;
+  private dialogConfig;
 
   public displayedColumns = ['title', 'company', 'edition', 'publishYear','value', 'details', 'update', 'delete' ];
-   public dataSource = new MatTableDataSource<Book>();
+  public dataSource = new MatTableDataSource<Book>();
 
    @ViewChild(MatSort) sort: MatSort;
    @ViewChild(MatPaginator) paginator: MatPaginator;
 
-   constructor(private repoService: RepositoryService, private errorService: ErrorHandlerService, private router: Router) { }
+   constructor(private repoService: RepositoryService, private errorService: ErrorHandlerService, private router: Router, private dialog: MatDialog) { }
     ngOnInit() {
       this.getBooks();
+        this.dialogConfig = {
+        height: '200px',
+        width: '400px',
+        disableClose: true,
+        data: { }
+      }
     }
 
     ngAfterViewInit(): void {
@@ -44,15 +52,19 @@ export class BookListComponent implements OnInit, AfterViewInit {
       .subscribe(res => {
         const { books, totalCount, currentPage, totalPages, pageSize  } = res as BookList;
         this.dataSource.data = books;
-        this.totalCount = totalCount;
-        this.pageSize = currentPage;
-        this.totalPages = totalPages;
+        this.length = totalCount;
+        this.currentPage = currentPage;
         this.pageSize = pageSize;
+      }),
+      (error => {
+          this.errorService.dialogConfig = { ...this.dialogConfig };
+          this.errorService.handleError(error);
       })
     }
 
     public pageChanged = (event) => {
-      this.currentPage = event;
+      this.currentPage = event.pageIndex;
+      this.pageSize = event.pageSize;
       this.getBooks();
     }
 

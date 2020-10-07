@@ -5,5 +5,5 @@ export interface SubjectList {
   totalPages: number;
   pageSize : number;
   currentPage: number;
-  subjects: Subject;
+  subjects: Subject[];
 }

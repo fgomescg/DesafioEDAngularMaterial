@@ -1,1 +1,25 @@
-<p>author-create works!</p>
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card fxFlex="500px" fxFlex.xs="100%">
+      <mat-card-title>Cadastro de livro</mat-card-title>
+      <form [formGroup]="authorForm" autocomplete="off" novalidate (ngSubmit)="createAuthor(authorForm.value)" fxLayout="column wrap"
+      fxLayoutAlign="center center" fxLayoutGap="10px">
+
+        <mat-card-content>
+          <mat-form-field>
+            <input matInput type="text" placeholder="Nome" formControlName="name" id="name">
+            <mat-hint align="end">Insira o nome do Autor.</mat-hint>
+            <mat-error *ngIf="hasError('name', 'required')">Nome é obrigatório.</mat-error>
+            <mat-error *ngIf="hasError('name', 'maxlength')">Tamanho máximo permitido 40 caractéres.</mat-error>
+          </mat-form-field>
+
+        </mat-card-content>
+        <mat-card-actions>
+          <mat-card-actions align="center">
+            <button mat-raised-button color="primary" [disabled]="!authorForm.valid">Cadastrar</button>
+            <button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
+          </mat-card-actions>
+        </mat-card-actions>
+
+      </form>
+    </mat-card>
+</section>
