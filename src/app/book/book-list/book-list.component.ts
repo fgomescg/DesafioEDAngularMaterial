@@ -7,6 +7,7 @@ import { BookList } from '../../_interface/book-list';
 import { Book } from '../../_interface/book.model';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ErrorHandlerService } from '@app/_services/error-handler.service';
 
 @Component({
   selector: 'app-book-list',
@@ -27,9 +28,7 @@ export class BookListComponent implements OnInit, AfterViewInit {
    @ViewChild(MatSort) sort: MatSort;
    @ViewChild(MatPaginator) paginator: MatPaginator;
 
-   constructor(private repoService: RepositoryService,
-    private router: Router
-    ) { }
+   constructor(private repoService: RepositoryService, private errorService: ErrorHandlerService, private router: Router) { }
     ngOnInit() {
       this.getBooks();
     }

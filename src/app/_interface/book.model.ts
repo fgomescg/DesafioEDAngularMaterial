@@ -5,6 +5,6 @@ export interface Book {
   value: number;
   edition: number;
   publishYear: string;
-  bookAuthors: [];
-  bookSubjects:[];
+  authors: [];
+  subjects:[];
 }
