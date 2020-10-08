@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EnvironmentUrlService } from '@app/_services/environment-url.service';
 
 @Component({
   selector: 'app-report',
@@ -7,15 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReportComponent implements OnInit {
 
-  constructor() { }
+  constructor(private envUrl: EnvironmentUrlService) { }
 
   ngOnInit(): void {
   }
 
   openReport(download : boolean) {
     if(download) {
-      window.open('http://localhost:5000/api/v1/report/download');
+      window.open(`${this.envUrl.urlAddress}/api/v1/report/download`);
       }
-      window.open('http://localhost:5000/api/v1/report');
+      window.open(`${this.envUrl.urlAddress}/api/v1/report`);
   }
 }
