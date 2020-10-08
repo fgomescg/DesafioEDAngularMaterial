@@ -1,1 +1,50 @@
-<p>book-delete works!</p>
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card fxFlex="500px" fxFlex.xs="100%">
+      <mat-card-title>Deletar Livro</mat-card-title>
+      <mat-card-content>
+        <div fxLayout="column wrap" fxLayoutGap="40px">
+          <div fxLayout="row wrap" fxFlex>
+            <div fxFlex><strong>Título:</strong></div>
+            <div fxFlex>{{book?.title}}</div>
+          </div>
+
+          <div fxLayout="row wrap" fxFlex>
+            <div fxFlex><strong>Editora:</strong></div>
+            <div fxFlex>{{book?.company}}</div>
+          </div>
+
+          <div fxLayout="row wrap" fxFlex>
+            <div fxFlex><strong>Edição:</strong></div>
+            <div fxFlex>{{book?.edition}}</div>
+          </div>
+
+          <div fxLayout="row wrap" fxFlex>
+            <div fxFlex><strong>Ano de publicação:</strong></div>
+            <div fxFlex>{{book?.publishYear}}</div>
+          </div>
+
+          <div fxLayout="row wrap" fxFlex>
+            <div fxFlex><strong>Valor:</strong></div>
+            <div fxFlex>R$ {{book?.value}}</div>
+          </div>
+
+          <div fxLayout="row wrap" fxFlex *ngIf="book?.subjects.length > 0;">
+            <div fxFlex><strong>Assunto:</strong></div>
+            <div fxFlex *ngFor="let bookSubject of book?.subjects">{{ bookSubject.description }}</div>
+          </div>
+
+          <div fxLayout="row wrap" fxFlex *ngIf="book?.authors.length > 0;">
+            <div fxFlex><strong>Autores:</strong></div>
+            <div fxFlex *ngFor="let bookAuthor of book?.authors">{{bookAuthor.name}}</div>
+          </div>
+
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-card-actions align="center">
+          <button mat-raised-button color="primary" (click)="deleteBook()">Deletar</button>
+          <button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
+        </mat-card-actions>
+      </mat-card-actions>
+    </mat-card>
+</section>

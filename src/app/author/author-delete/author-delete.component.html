@@ -1,1 +1,19 @@
-<p>author-delete works!</p>
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card fxFlex="500px" fxFlex.xs="100%">
+      <mat-card-title>Deletar Autor</mat-card-title>
+      <mat-card-content>
+        <div fxLayout="column wrap" fxLayoutGap="40px">
+          <div fxLayout="row wrap" fxFlex>
+            <div fxFlex><strong>Nome:</strong></div>
+            <div fxFlex>{{Author?.name}}</div>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-card-actions align="center">
+          <button mat-raised-button color="primary" (click)="deleteAuthor()">Deletar</button>
+          <button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
+        </mat-card-actions>
+      </mat-card-actions>
+    </mat-card>
+</section>

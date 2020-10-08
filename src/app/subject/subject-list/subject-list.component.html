@@ -1,9 +1,9 @@
 <div fxLayout fxLayout.lt-md="column wrap" fxLayoutAlign="center center" fxLayoutGap.gt-sm="250px" fxLayoutGap.lt.md="20px">
   <mat-form-field>
-    <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar Autor">
+    <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar Assunto">
   </mat-form-field>
   <div>
-    <a [routerLink]="['/author/create']" mat-button color="primary">Cadastrar Assunto</a>
+    <a [routerLink]="['/subject/create']" mat-button color="primary">Cadastrar Assunto</a>
   </div>
 </div>
 <table mat-table [dataSource]="dataSource" matSort>

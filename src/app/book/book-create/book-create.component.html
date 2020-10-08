@@ -48,14 +48,14 @@
 
            <mat-form-field>
             <mat-label>Autores</mat-label>
-            <mat-select  multiple>
+            <mat-select  multiple formControlName="BookAuthors">
               <mat-option *ngFor="let author of authors" [value]="author.authorId">{{author.name}}</mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Assuntos</mat-label>
-            <mat-select  multiple>
+            <mat-select  multiple formControlName="BookSubjects">
               <mat-option *ngFor="let subject of subjects" [value]="subject.subjectId">{{subject.description}}</mat-option>
             </mat-select>
           </mat-form-field>

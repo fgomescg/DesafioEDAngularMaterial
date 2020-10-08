@@ -6,12 +6,11 @@ import { AuthorUpdateComponent } from './author-update/author-update.component';
 import { AuthorDeleteComponent } from './author-delete/author-delete.component';
 import { AuthorRoutingModule } from './author-routing/author-routing.module';
 import { MaterialModule } from './../material/material.module';
-import { AuthorDetailsComponent } from './author-details/author-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module'
 
 @NgModule({
-  declarations: [AuthorListComponent, AuthorCreateComponent, AuthorUpdateComponent, AuthorDeleteComponent, AuthorDetailsComponent],
+  declarations: [AuthorListComponent, AuthorCreateComponent, AuthorUpdateComponent, AuthorDeleteComponent],
   imports: [
     CommonModule,
     AuthorRoutingModule,

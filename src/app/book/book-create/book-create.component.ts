@@ -33,8 +33,8 @@ export class BookCreateComponent implements OnInit {
       edition: new FormControl('', [Validators.required]),
       value: new FormControl(this.bookValue, [Validators.required]),
       publishYear: new FormControl('', [Validators.required, Validators.maxLength(4), Validators.min(1500), Validators.max(this.currentYear)]),
-      bookAuthors: new FormControl(null),
-      bookSubjects: new FormControl(null)
+      BookAuthors: new FormControl(null),
+      BookSubjects: new FormControl(null)
     });
     this.getAllAuthors();
     this.getAllSubjects();
@@ -94,8 +94,8 @@ export class BookCreateComponent implements OnInit {
       edition: Number(bookFormValue.edition),
       value:  Number(this.bookValue),
       publishYear: bookFormValue.publishYear,
-      bookAuthors:  this.transformToBookAuthorModel(bookFormValue.bookAuthors),
-      bookSubjects: this.transformToBookSubjectModel(bookFormValue.bookSubjects)
+      BookAuthors:  this.transformToBookAuthorModel(bookFormValue.BookAuthors),
+      BookSubjects: this.transformToBookSubjectModel(bookFormValue.BookSubjects)
     }
 
     this.repository.create(`/books`, book)
@@ -120,7 +120,7 @@ export class BookCreateComponent implements OnInit {
   private transformToBookAuthorModel(ids) {
     if (ids) {
       return ids.map((id) => {
-        return { "authorId": id }
+        return { "AuthorId": id }
       });
     }
     return [];

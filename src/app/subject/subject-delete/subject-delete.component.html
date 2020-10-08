@@ -1,1 +1,19 @@
-<p>subject-delete works!</p>
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card fxFlex="500px" fxFlex.xs="100%">
+      <mat-card-title>Deletar Asunto</mat-card-title>
+      <mat-card-content>
+        <div fxLayout="column wrap" fxLayoutGap="40px">
+          <div fxLayout="row wrap" fxFlex>
+            <div fxFlex><strong>Assunto:</strong></div>
+            <div fxFlex>{{Subject?.description}}</div>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-card-actions align="center">
+          <button mat-raised-button color="primary" (click)="deleteSubject()">Deletar</button>
+          <button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
+        </mat-card-actions>
+      </mat-card-actions>
+    </mat-card>
+</section>

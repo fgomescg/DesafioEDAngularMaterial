@@ -1,6 +1,6 @@
 <section fxLayout="row wrap" fxLayoutAlign="center center">
   <mat-card fxFlex="500px" fxFlex.xs="100%">
-      <mat-card-title>Cadastro de livro</mat-card-title>
+      <mat-card-title>Editar livro</mat-card-title>
       <form [formGroup]="bookForm" autocomplete="off" novalidate (ngSubmit)="updateBook(bookForm.value)" fxLayout="column wrap"
       fxLayoutAlign="center center" fxLayoutGap="10px">
 
@@ -38,7 +38,6 @@
             <input matInput type="text" mvndrMatCurrencyFormat placeholder="Valor"
             [allowNegative]="false"
             [currencyCode]="'BRL'"
-            [value]="bookValue"
             (blur)="updateBRLAmount($event)"
             formControlName="value" id="value">
 
@@ -48,22 +47,24 @@
 
            <mat-form-field>
             <mat-label>Autores</mat-label>
-            <mat-select  multiple>
-              <mat-option *ngFor="let author of authors" [value]="author.authorId">{{author.name}}</mat-option>
+            <mat-select  multiple formControlName="bookAuthors">
+              <mat-option *ngFor="let author of authors" [value]="author.authorId">
+                {{author.name}}
+              </mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Assuntos</mat-label>
-            <mat-select  multiple>
-              <mat-option *ngFor="let subject of subjects" [value]="subject.subjectId">{{subject.description}}</mat-option>
+            <mat-select  multiple formControlName="bookSubjects">
+              <mat-option *ngFor="let subject of subjects" [value]="subject.subjectId" >{{subject.description}}</mat-option>
             </mat-select>
           </mat-form-field>
 
         </mat-card-content>
         <mat-card-actions>
           <mat-card-actions align="center">
-            <button mat-raised-button color="primary" [disabled]="!bookForm.valid">Cadastrar</button>
+            <button mat-raised-button color="primary" [disabled]="!bookForm.valid">Salvar</button>
             <button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
           </mat-card-actions>
         </mat-card-actions>

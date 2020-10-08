@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { RepositoryService } from '@app/_services/repository.service';
 import { ErrorHandlerService } from '@app/_services/error-handler.service';
 import { Book } from '@app/_interface/book.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-book-details',
@@ -13,7 +14,7 @@ export class BookDetailsComponent implements OnInit {
   public book: Book;
   public errorMessage: string = '';
 
-  constructor(private repository: RepositoryService, private router: Router,
+  constructor(private location: Location, private repository: RepositoryService,
     private activeRoute: ActivatedRoute, private errorHandler: ErrorHandlerService) { }
 
   ngOnInit(): void {
@@ -33,8 +34,7 @@ export class BookDetailsComponent implements OnInit {
     })
   }
 
-  public redirectToBookList(){
-    this.router.navigate(['/book/list']);
+  public onBack(){
+    this.location.back();
   }
-
 }

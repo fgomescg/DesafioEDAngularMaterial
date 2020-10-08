@@ -31,16 +31,18 @@ export class BookUpdateComponent implements OnInit {
     private activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getBookById();
+
     this.bookForm = new FormGroup({
       title: new FormControl('', [Validators.required, Validators.maxLength(40)]),
       company: new FormControl('', [Validators.required, Validators.maxLength(40)]),
       edition: new FormControl('', [Validators.required]),
-      value: new FormControl(this.bookValue, [Validators.required]),
+      value: new FormControl('', [Validators.required]),
       publishYear: new FormControl('', [Validators.required, Validators.maxLength(4), Validators.min(1500), Validators.max(this.currentYear)]),
       bookAuthors: new FormControl(null),
       bookSubjects: new FormControl(null)
     });
-    this.getBookById();
+
     this.getAllAuthors();
     this.getAllSubjects();
 
@@ -59,10 +61,20 @@ export class BookUpdateComponent implements OnInit {
       .subscribe(res => {
         this.book = res as Book;
         this.bookForm.patchValue(this.book);
+
+        var selectedAuthors = this.book.authors.map((obj) => {
+          return obj["authorId"];
+        });
+        this.bookForm.controls.bookAuthors.setValue(selectedAuthors);
+
+        var selectedSubjects = this.book.subjects.map((obj) => {
+          return obj["subjectId"];
+        })
+        this.bookForm.controls.bookSubjects.setValue(selectedSubjects);
       },
       (error) => {
         this.errorService.dialogConfig = { ...this.dialogConfig };
-       // this.errorService.handleError(error);
+        this.errorService.handleError(error);
       })
   }
 
@@ -74,7 +86,7 @@ export class BookUpdateComponent implements OnInit {
       },
       (error) => {
         this.errorService.dialogConfig = { ...this.dialogConfig };
-        //this.errorService.handleError(error);
+        this.errorService.handleError(error);
       }
     );
   };
@@ -102,19 +114,19 @@ export class BookUpdateComponent implements OnInit {
 
   public updateBook = (bookFormValue) => {
     if (this.bookForm.valid) {
-      this.executeBookCreation(bookFormValue);
+      this.executeBookUpdate(bookFormValue);
     }
   }
 
-  private executeBookCreation = (bookFormValue) => {
+  private executeBookUpdate = (bookFormValue) => {
     const book: BookForCreation = {
       title: bookFormValue.title,
       company: bookFormValue.company,
       edition: Number(bookFormValue.edition),
-      value:  Number(this.bookValue),
+      value:  Number(bookFormValue.value),
       publishYear: bookFormValue.publishYear,
-      bookAuthors:  this.transformToBookAuthorModel(bookFormValue.bookAuthors),
-      bookSubjects: this.transformToBookSubjectModel(bookFormValue.bookSubjects)
+      BookAuthors:  this.transformToBookAuthorModel(bookFormValue.bookAuthors),
+      BookSubjects: this.transformToBookSubjectModel(bookFormValue.bookSubjects)
     }
 
     this.repository.update(`/books/${this.book.id}`, book)
@@ -139,7 +151,7 @@ export class BookUpdateComponent implements OnInit {
   private transformToBookAuthorModel(ids) {
     if (ids) {
       return ids.map((id) => {
-        return { "authorId": id }
+        return { "AuthorId": id, "BookId": this.book.id }
       });
     }
     return [];
@@ -148,7 +160,7 @@ export class BookUpdateComponent implements OnInit {
   private transformToBookSubjectModel(ids) {
     if (ids) {
       return ids.map((id) => {
-        return { "subjectId": id }
+        return { "SubjectId": id, "BookId": this.book.id }
       });
     }
     return [];

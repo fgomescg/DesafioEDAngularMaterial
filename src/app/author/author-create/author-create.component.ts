@@ -23,7 +23,7 @@ export class AuthorCreateComponent implements OnInit {
 
   ngOnInit() {
     this.authorForm = new FormGroup({
-      title: new FormControl('', [Validators.required, Validators.maxLength(40)])
+      name: new FormControl('', [Validators.required, Validators.maxLength(40)])
     });
 
     this.dialogConfig = {
@@ -52,11 +52,13 @@ export class AuthorCreateComponent implements OnInit {
     const author: AuthorForCreation = {
       name: authorFormValue.name
     }
-    const apiUrl = 'api/v1/authors';
-    this.repository.create(apiUrl, author)
+    this.repository.create('/authors', author)
       .subscribe(res => {
         let dialogRef = this.dialog.open(SuccessDialogComponent, this.dialogConfig);
         dialogRef.afterClosed()
+        .subscribe(result => {
+          this.location.back();
+        });
       },
       (error => {
         this.errorService.dialogConfig = { ...this.dialogConfig };

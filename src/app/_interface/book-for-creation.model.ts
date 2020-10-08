@@ -4,6 +4,6 @@ export interface BookForCreation {
   value: number;
   publishYear: string;
   edition: number;
-  bookAuthors: [];
-  bookSubjects:[];
+  BookAuthors: [];
+  BookSubjects: [];
 }
