@@ -1,4 +1,8 @@
-# AngularDesafioedCrud
+# Desafio CRUD Angular
+
+Cadastro de Livros, Autores e Assunto.
+
+# Tecnologias utilizadas
 
 Projeto em Angular 10.1.4. <br />
 Material Design.
