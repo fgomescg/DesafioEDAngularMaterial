@@ -17,12 +17,12 @@ import { ErrorHandlerService } from '@app/_services/error-handler.service';
 })
 export class AuthorListComponent implements OnInit, AfterViewInit {
 
-  public errorMessage: string = '';
-  public length : number;
-  public totalPages: number;
-  public currentPage: number = 0;
-  public pageSize : number = 10;
-  private dialogConfig;
+  errorMessage: string = '';
+  length : number;
+  totalPages: number;
+  currentPage: number = 0;
+  pageSize : number = 10;
+  dialogConfig;
 
   public displayedColumns = ['name', 'update', 'delete' ];
   public dataSource = new MatTableDataSource<Author>();
@@ -43,18 +43,16 @@ export class AuthorListComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
       this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
     }
 
     public getAuthors = () => {
       let params = new HttpParams().set("pageNumber",this.currentPage.toString()).set("pageSize", this.pageSize.toString());
       this.repoService.getData('api/v1/authors', params)
       .subscribe(res => {
-        const { authors, totalCount, currentPage, totalPages, pageSize  } = res as AuthorList;
+        const { authors, totalCount, currentPage  } = res as AuthorList;
         this.dataSource.data = authors;
         this.length = totalCount;
         this.currentPage = currentPage;
-        this.pageSize = pageSize;
       }),
       (error => {
           this.errorService.dialogConfig = { ...this.dialogConfig };

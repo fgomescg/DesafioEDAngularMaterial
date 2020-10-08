@@ -62,11 +62,12 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-  <mat-paginator
+ <mat-paginator
     [pageSize]="pageSize"
     [length]="length"
-    showFirstLastButtons
     [pageIndex]="currentPage"
+    showFirstLastButtons
     [pageSizeOptions]="[2, 4, 6, 10, 20]"
     (page)="pageChanged($event)" >
 </mat-paginator>
+

@@ -17,12 +17,12 @@ import { ErrorHandlerService } from '@app/_services/error-handler.service';
 })
 export class SubjectListComponent implements OnInit, AfterViewInit {
 
-  public errorMessage: string = '';
-  public length : number;
-  public totalPages: number;
-  public currentPage: number = 0;
-  public pageSize : number = 10;
-  private dialogConfig;
+  errorMessage: string = '';
+  length : number;
+  totalPages: number;
+  currentPage: number = 0;
+  pageSize : number = 10;
+  dialogConfig;
 
   public displayedColumns = ['description', 'update', 'delete' ];
   public dataSource = new MatTableDataSource<Subject>();
@@ -30,7 +30,7 @@ export class SubjectListComponent implements OnInit, AfterViewInit {
    @ViewChild(MatSort) sort: MatSort;
    @ViewChild(MatPaginator) paginator: MatPaginator;
 
-   constructor(private repoService: RepositoryService, private errorService: ErrorHandlerService, private router: Router, private dialog: MatDialog) { }
+   constructor(private repoService: RepositoryService, private errorService: ErrorHandlerService, private router: Router) { }
     ngOnInit() {
       this.getSubjects();
         this.dialogConfig = {
@@ -43,18 +43,16 @@ export class SubjectListComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
       this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
     }
 
     public getSubjects = () => {
       let params = new HttpParams().set("pageNumber",this.currentPage.toString()).set("pageSize", this.pageSize.toString());
       this.repoService.getData('api/v1/subjects', params)
       .subscribe(res => {
-        const { subjects, totalCount, currentPage, totalPages, pageSize  } = res as SubjectList;
+        const { subjects, totalCount, currentPage  } = res as SubjectList;
         this.dataSource.data = subjects;
         this.length = totalCount;
         this.currentPage = currentPage;
-        this.pageSize = pageSize;
       }),
       (error => {
           this.errorService.dialogConfig = { ...this.dialogConfig };
