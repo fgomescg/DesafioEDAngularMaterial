@@ -1,6 +1,6 @@
 # AngularDesafioedCrud
 
-Este projeto foi gerado com Angular CLI 10.1.4. <br />
+Projeto em Angular 10.1.4. <br />
 Material Design.
 
 # WEB API
