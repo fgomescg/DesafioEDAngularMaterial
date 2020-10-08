@@ -11,6 +11,7 @@ import { SuccessDialogComponent } from '@app/shared/dialogs/success-dialog/succe
 import { ErrorHandlerService } from '@app/_services/error-handler.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '@app/_interface/book.model';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-book-update',
@@ -18,13 +19,16 @@ import { Book } from '@app/_interface/book.model';
   styleUrls: ['./book-update.component.css']
 })
 export class BookUpdateComponent implements OnInit {
-  public bookForm: FormGroup;
-  public book: Book;
-  public authors;
-  public subjects;
-  public bookValue = 0;
-  public currentYear = new Date().getFullYear();
+  bookForm: FormGroup;
+  book: Book;
+  authors;
+  subjects;
+  bookValue = 0;
+  defaultPageSize = "30";
+  currentYear = new Date().getFullYear();
   private dialogConfig;
+  defaultParams = new HttpParams().set("pageNumber", "0")
+                .set("pageSize", this.defaultPageSize);
 
 
   constructor(private location: Location, private repository: RepositoryService ,private dialog: MatDialog, private errorService: ErrorHandlerService,
@@ -79,7 +83,7 @@ export class BookUpdateComponent implements OnInit {
   }
 
   public getAllAuthors = () => {
-    this.repository.getData('/authors').subscribe(
+    this.repository.getData('/authors', this.defaultParams).subscribe(
       (res) => {
         const { authors } = res as AuthorList;
         this.authors = authors;
@@ -92,7 +96,7 @@ export class BookUpdateComponent implements OnInit {
   };
 
   public getAllSubjects = () => {
-    this.repository.getData('/subjects').subscribe(
+    this.repository.getData('/subjects', this.defaultParams).subscribe(
       (res) => {
         const { subjects } = res as SubjectList;
         this.subjects = subjects;
@@ -122,18 +126,18 @@ export class BookUpdateComponent implements OnInit {
     const book: BookForCreation = {
       title: bookFormValue.title,
       company: bookFormValue.company,
-      edition: Number(bookFormValue.edition),
-      value:  Number(bookFormValue.value),
+      edition: bookFormValue.edition,
+      value:  bookFormValue.value,
       publishYear: bookFormValue.publishYear,
       BookAuthors:  this.transformToBookAuthorModel(bookFormValue.bookAuthors),
       BookSubjects: this.transformToBookSubjectModel(bookFormValue.bookSubjects)
     }
 
     this.repository.update(`/books/${this.book.id}`, book)
-      .subscribe(res => {
+      .subscribe(() => {
         let dialogRef = this.dialog.open(SuccessDialogComponent, this.dialogConfig);
         dialogRef.afterClosed()
-        .subscribe(result => {
+        .subscribe(() => {
           this.location.back();
         });
       },

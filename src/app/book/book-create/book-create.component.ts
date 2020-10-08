@@ -9,6 +9,7 @@ import { SubjectList } from '@app/_interface/subject-list';
 import { MatDialog } from '@angular/material/dialog';
 import { SuccessDialogComponent } from '@app/shared/dialogs/success-dialog/success-dialog.component';
 import { ErrorHandlerService } from '@app/_services/error-handler.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-book-create',
@@ -16,12 +17,15 @@ import { ErrorHandlerService } from '@app/_services/error-handler.service';
   styleUrls: ['./book-create.component.css']
 })
 export class BookCreateComponent implements OnInit {
-  public bookForm: FormGroup;
-  public authors;
-  public subjects;
-  public bookValue = 0;
-  public currentYear = new Date().getFullYear();
+  bookForm: FormGroup;
+  authors;
+  subjects;
+  bookValue = 0;
+  defaultPageSize = "30";
+  currentYear = new Date().getFullYear();
   private dialogConfig;
+  defaultParams = new HttpParams().set("pageNumber", "0")
+                .set("pageSize", this.defaultPageSize);
 
 
   constructor(private location: Location, private repository: RepositoryService ,private dialog: MatDialog, private errorService: ErrorHandlerService) { }
@@ -48,7 +52,7 @@ export class BookCreateComponent implements OnInit {
   }
 
   public getAllAuthors = () => {
-    this.repository.getData('/authors').subscribe(
+    this.repository.getData('/authors', this.defaultParams).subscribe(
       (res) => {
         const { authors } = res as AuthorList;
         this.authors = authors;
@@ -61,7 +65,7 @@ export class BookCreateComponent implements OnInit {
   };
 
   public getAllSubjects = () => {
-    this.repository.getData('/subjects').subscribe(
+    this.repository.getData('/subjects', this.defaultParams).subscribe(
       (res) => {
         const { subjects } = res as SubjectList;
         this.subjects = subjects;
@@ -102,7 +106,7 @@ export class BookCreateComponent implements OnInit {
       .subscribe(res => {
         let dialogRef = this.dialog.open(SuccessDialogComponent, this.dialogConfig);
         dialogRef.afterClosed()
-        .subscribe(result => {
+        .subscribe(() => {
           this.location.back();
         });
       },

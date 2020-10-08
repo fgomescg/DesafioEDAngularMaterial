@@ -6,9 +6,9 @@
 
         <mat-card-content>
           <mat-form-field>
-            <input matInput type="text" placeholder="Nome" formControlName="description" id="description">
+            <input matInput type="text" placeholder="Descrição" formControlName="description" id="description">
             <mat-hint align="end">Insira o assunto.</mat-hint>
-            <mat-error *ngIf="hasError('description', 'required')">Assunto é obrigatório.</mat-error>
+            <mat-error *ngIf="hasError('description', 'required')">Descrição é obrigatório.</mat-error>
             <mat-error *ngIf="hasError('description', 'maxlength')">Tamanho máximo permitido 20 caractéres.</mat-error>
           </mat-form-field>
 
