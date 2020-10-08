@@ -17,7 +17,8 @@ import { SubjectModule } from './subject/subject.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { ServerErrorComponent } from './error-pages/server-error/server-error.component';
-import { SharedModule } from '@app/shared/shared.module'
+import { SharedModule } from '@app/shared/shared.module';
+import { ReportComponent } from './report/report.component'
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SharedModule } from '@app/shared/shared.module'
     HeaderComponent,
     SidenavListComponent,
     NotFoundComponent,
-    ServerErrorComponent
+    ServerErrorComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,

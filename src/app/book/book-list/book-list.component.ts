@@ -32,7 +32,7 @@ export class BookListComponent implements OnInit, AfterViewInit {
 
    constructor(private repoService: RepositoryService, private errorService: ErrorHandlerService, private router: Router, private dialog: MatDialog) { }
     ngOnInit() {
-      this.getBooks();
+      this.getBooks(this.currentPage, this.pageSize);
         this.dialogConfig = {
         height: '200px',
         width: '400px',
@@ -46,8 +46,8 @@ export class BookListComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator = this.paginator;
     }
 
-    public getBooks = () => {
-      let params = new HttpParams().set("pageNumber",this.currentPage.toString()).set("pageSize", this.pageSize.toString());
+    public getBooks = (pageIndex, pageSize) => {
+      let params = new HttpParams().set("pageNumber", pageIndex).set("pageSize", pageSize);
       this.repoService.getData('api/v1/books', params)
       .subscribe(res => {
         const { books, totalCount, currentPage, totalPages, pageSize  } = res as BookList;
@@ -63,9 +63,7 @@ export class BookListComponent implements OnInit, AfterViewInit {
     }
 
     public pageChanged = (event) => {
-      this.currentPage = event.pageIndex;
-      this.pageSize = event.pageSize;
-      this.getBooks();
+      this.getBooks(event.pageIndex, event.pageSize);
     }
 
     public doFilter = (value: string) => {
