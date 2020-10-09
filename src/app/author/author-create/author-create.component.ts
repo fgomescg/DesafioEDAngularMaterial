@@ -30,7 +30,9 @@ export class AuthorCreateComponent implements OnInit {
       height: '200px',
       width: '400px',
       disableClose: true,
-      data: { }
+      data: {
+        successMessage: 'Autor criado com sucesso !',
+       }
     }
   }
 
@@ -56,12 +58,11 @@ export class AuthorCreateComponent implements OnInit {
       .subscribe(res => {
         let dialogRef = this.dialog.open(SuccessDialogComponent, this.dialogConfig);
         dialogRef.afterClosed()
-        .subscribe(result => {
+        .subscribe(() => {
           this.location.back();
         });
       },
       (error => {
-        this.errorService.dialogConfig = { ...this.dialogConfig };
         this.errorService.handleError(error);
       })
     )

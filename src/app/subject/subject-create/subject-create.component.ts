@@ -30,8 +30,10 @@ export class SubjectCreateComponent implements OnInit {
       height: '200px',
       width: '400px',
       disableClose: true,
-      data: { }
-    }
+      data: {
+        successMessage: 'Assunto cadastrado com sucesso !',
+      },
+    };
   }
 
   public hasError = (controlName: string, errorName: string) =>{
@@ -56,12 +58,11 @@ export class SubjectCreateComponent implements OnInit {
       .subscribe(res => {
         let dialogRef = this.dialog.open(SuccessDialogComponent, this.dialogConfig);
         dialogRef.afterClosed()
-        .subscribe(result => {
+        .subscribe(() => {
           this.location.back();
         });
       },
       (error => {
-        this.errorService.dialogConfig = { ...this.dialogConfig };
         this.errorService.handleError(error);
       })
     )

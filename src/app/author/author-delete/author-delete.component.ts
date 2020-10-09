@@ -10,7 +10,7 @@ import { SuccessDialogComponent } from '@app/shared/dialogs/success-dialog/succe
 @Component({
   selector: 'app-author-delete',
   templateUrl: './author-delete.component.html',
-  styleUrls: ['./author-delete.component.css']
+  styleUrls: ['./author-delete.component.css'],
 })
 export class AuthorDeleteComponent implements OnInit {
   public Author: Author;
@@ -22,41 +22,51 @@ export class AuthorDeleteComponent implements OnInit {
     private repository: RepositoryService,
     private dialog: MatDialog,
     private errorService: ErrorHandlerService,
-    private activeRoute: ActivatedRoute) { }
+    private activeRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.getAuthorById();
+    this.dialogConfig = {
+      height: '200px',
+      width: '400px',
+      disableClose: true,
+      data: {
+        successMessage: 'Autor deletado com sucesso !',
+      },
+    };
   }
 
   getAuthorById = () => {
     let id: string = this.activeRoute.snapshot.params['id'];
-    this.repository.getData(`/authors/${id}`)
-    .subscribe(res => {
-      this.Author = res as Author;
-    },
-    (error) =>{
-      this.errorService.dialogConfig = { ...this.dialogConfig };
-      this.errorService.handleError(error);
-    })
-  }
-
-  public deleteAuthor = () => {
-    this.repository.delete(`/authors/${this.Author.authorId}`).subscribe(
+    this.repository.getData(`/authors/${id}`).subscribe(
       (res) => {
-        let dialogRef = this.dialog.open(SuccessDialogComponent, this.dialogConfig);
-        dialogRef.afterClosed()
-        .subscribe(() => {
-          this.location.back();
-        });
+        this.Author = res as Author;
       },
       (error) => {
-        this.errorService.dialogConfig = { ...this.dialogConfig };
         this.errorService.handleError(error);
       }
     );
   };
 
-  public onCancel(){
+  public deleteAuthor = () => {
+    this.repository.delete(`/authors/${this.Author.authorId}`).subscribe(
+      (res) => {
+        let dialogRef = this.dialog.open(
+          SuccessDialogComponent,
+          this.dialogConfig
+        );
+        dialogRef.afterClosed().subscribe(() => {
+          this.location.back();
+        });
+      },
+      (error) => {
+        this.errorService.handleError(error);
+      }
+    );
+  };
+
+  public onCancel() {
     this.location.back();
   }
 }

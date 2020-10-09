@@ -54,7 +54,9 @@ export class BookUpdateComponent implements OnInit {
       height: '200px',
       width: '400px',
       disableClose: true,
-      data: { }
+      data: {
+        successMessage: 'Livro atualizado com sucesso !',
+      }
     }
   }
 
@@ -77,7 +79,6 @@ export class BookUpdateComponent implements OnInit {
         this.bookForm.controls.bookSubjects.setValue(selectedSubjects);
       },
       (error) => {
-        this.errorService.dialogConfig = { ...this.dialogConfig };
         this.errorService.handleError(error);
       })
   }
@@ -89,7 +90,6 @@ export class BookUpdateComponent implements OnInit {
         this.authors = authors;
       },
       (error) => {
-        this.errorService.dialogConfig = { ...this.dialogConfig };
         this.errorService.handleError(error);
       }
     );
@@ -102,7 +102,6 @@ export class BookUpdateComponent implements OnInit {
         this.subjects = subjects;
       },
       (error) => {
-        this.errorService.dialogConfig = { ...this.dialogConfig };
           this.errorService.handleError(error);
       }
     );
@@ -142,7 +141,6 @@ export class BookUpdateComponent implements OnInit {
         });
       },
       (error => {
-          this.errorService.dialogConfig = { ...this.dialogConfig };
           this.errorService.handleError(error);
       })
     )

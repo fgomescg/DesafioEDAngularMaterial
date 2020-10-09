@@ -13,20 +13,27 @@ import { Author } from '@app/_interface/author.model';
 @Component({
   selector: 'app-author-update',
   templateUrl: './author-update.component.html',
-  styleUrls: ['./author-update.component.css']
+  styleUrls: ['./author-update.component.css'],
 })
 export class AuthorUpdateComponent implements OnInit {
   public authorForm: FormGroup;
   public author;
   private dialogConfig;
 
-
-  constructor(private location: Location, private repository: RepositoryService ,private dialog: MatDialog, private errorService: ErrorHandlerService,
-  private activeRoute: ActivatedRoute) { }
+  constructor(
+    private location: Location,
+    private repository: RepositoryService,
+    private dialog: MatDialog,
+    private errorService: ErrorHandlerService,
+    private activeRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.authorForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.maxLength(40)])
+      name: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(40),
+      ]),
     });
     this.getAuthorById();
 
@@ -34,55 +41,58 @@ export class AuthorUpdateComponent implements OnInit {
       height: '200px',
       width: '400px',
       disableClose: true,
-      data: { }
-    }
+      data: {
+        successMessage: 'Autor atualizado com sucesso !',
+      },
+    };
   }
 
   private getAuthorById = () => {
     let authorId: string = this.activeRoute.snapshot.params['id'];
 
-    this.repository.getData(`/authors/${authorId}`)
-      .subscribe(res => {
+    this.repository.getData(`/authors/${authorId}`).subscribe(
+      (res) => {
         this.author = res as Author;
         this.authorForm.patchValue(this.author);
       },
       (error) => {
-        this.errorService.dialogConfig = { ...this.dialogConfig };
         this.errorService.handleError(error);
-      })
-  }
+      }
+    );
+  };
 
-  public hasError = (controlName: string, errorName: string) =>{
+  public hasError = (controlName: string, errorName: string) => {
     return this.authorForm.controls[controlName].hasError(errorName);
-  }
+  };
 
   public onCancel = () => {
     this.location.back();
-  }
+  };
 
   public updateAuthor = (AuthorFormValue) => {
     if (this.authorForm.valid) {
       this.executeAuthorUpdate(AuthorFormValue);
     }
-  }
+  };
 
   private executeAuthorUpdate = (authorFormValue) => {
     const author: AuthorForCreation = {
-      name: authorFormValue.name
-    }
+      name: authorFormValue.name,
+    };
     let authorId: string = this.activeRoute.snapshot.params['id'];
-    this.repository.update(`/authors/${authorId}`, author)
-      .subscribe(() => {
-        let dialogRef = this.dialog.open(SuccessDialogComponent, this.dialogConfig);
-        dialogRef.afterClosed()
-        .subscribe(() => {
+    this.repository.update(`/authors/${authorId}`, author).subscribe(
+      () => {
+        let dialogRef = this.dialog.open(
+          SuccessDialogComponent,
+          this.dialogConfig
+        );
+        dialogRef.afterClosed().subscribe(() => {
           this.location.back();
         });
       },
-      (error => {
-        this.errorService.dialogConfig = { ...this.dialogConfig };
+      (error) => {
         this.errorService.handleError(error);
-      })
-    )
-  }
+      }
+    );
+  };
 }

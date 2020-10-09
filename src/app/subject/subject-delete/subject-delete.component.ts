@@ -10,7 +10,7 @@ import { SuccessDialogComponent } from '@app/shared/dialogs/success-dialog/succe
 @Component({
   selector: 'app-subject-delete',
   templateUrl: './subject-delete.component.html',
-  styleUrls: ['./subject-delete.component.css']
+  styleUrls: ['./subject-delete.component.css'],
 })
 export class SubjectDeleteComponent implements OnInit {
   public Subject: Subject;
@@ -22,41 +22,51 @@ export class SubjectDeleteComponent implements OnInit {
     private repository: RepositoryService,
     private dialog: MatDialog,
     private errorService: ErrorHandlerService,
-    private activeRoute: ActivatedRoute) { }
+    private activeRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.getSubjectById();
+    this.dialogConfig = {
+      height: '200px',
+      width: '400px',
+      disableClose: true,
+      data: {
+        successMessage: 'Assunto deletado com sucesso !',
+      },
+    };
   }
 
   getSubjectById = () => {
     let id: string = this.activeRoute.snapshot.params['id'];
-    this.repository.getData(`/subjects/${id}`)
-    .subscribe(res => {
-      this.Subject = res as Subject;
-    },
-    (error) =>{
-      this.errorService.dialogConfig = { ...this.dialogConfig };
-      this.errorService.handleError(error);
-    })
-  }
-
-  public deleteSubject = () => {
-    this.repository.delete(`/subjects/${this.Subject.subjectId}`).subscribe(
+    this.repository.getData(`/subjects/${id}`).subscribe(
       (res) => {
-        let dialogRef = this.dialog.open(SuccessDialogComponent, this.dialogConfig);
-        dialogRef.afterClosed()
-        .subscribe(() => {
-          this.location.back();
-        });
+        this.Subject = res as Subject;
       },
       (error) => {
-        this.errorService.dialogConfig = { ...this.dialogConfig };
         this.errorService.handleError(error);
       }
     );
   };
 
-  public onCancel(){
+  public deleteSubject = () => {
+    this.repository.delete(`/subjects/${this.Subject.subjectId}`).subscribe(
+      (res) => {
+        let dialogRef = this.dialog.open(
+          SuccessDialogComponent,
+          this.dialogConfig
+        );
+        dialogRef.afterClosed().subscribe(() => {
+          this.location.back();
+        });
+      },
+      (error) => {
+        this.errorService.handleError(error);
+      }
+    );
+  };
+
+  public onCancel() {
     this.location.back();
   }
 }
