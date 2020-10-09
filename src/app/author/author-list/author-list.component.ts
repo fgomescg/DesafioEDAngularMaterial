@@ -1,4 +1,3 @@
-import { RepositoryService } from './../../shared/repository.service';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -8,6 +7,7 @@ import { Author } from '../../_interface/author.model';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { RepositoryService } from '@app/_services/repository.service';
 import { ErrorHandlerService } from '@app/_services/error-handler.service';
 
 @Component({
