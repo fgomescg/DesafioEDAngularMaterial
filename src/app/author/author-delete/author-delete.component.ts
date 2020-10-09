@@ -28,8 +28,8 @@ export class AuthorDeleteComponent implements OnInit {
   ngOnInit(): void {
     this.getAuthorById();
     this.dialogConfig = {
-      height: '200px',
-      width: '400px',
+      height: '250px',
+      width: '450px',
       disableClose: true,
       data: {
         successMessage: 'Autor deletado com sucesso !',

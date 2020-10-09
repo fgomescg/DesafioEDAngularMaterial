@@ -28,8 +28,8 @@ export class SubjectDeleteComponent implements OnInit {
   ngOnInit(): void {
     this.getSubjectById();
     this.dialogConfig = {
-      height: '200px',
-      width: '400px',
+      height: '250px',
+      width: '450px',
       disableClose: true,
       data: {
         successMessage: 'Assunto deletado com sucesso !',

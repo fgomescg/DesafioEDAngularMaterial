@@ -28,7 +28,6 @@ export class ErrorHandlerService {
 
   private handle500Error = (error: HttpErrorResponse) => {
     this.createErrorMessage(error);
-    this.router.navigate(['/500']);
   }
 
   private handle404Error = (error: HttpErrorResponse) => {
@@ -43,6 +42,15 @@ export class ErrorHandlerService {
   }
 
   private createErrorMessage = (error: HttpErrorResponse) => {
-    this.errorMessage = error.error ? error.error : error.statusText;
+    this.errorMessage = error.error ? error.error.Message : error.statusText;
+    this.dialogConfig = {
+      height: '300px',
+      width: '400px',
+      disableClose: true,
+      data: {
+        errorMessage: this.errorMessage,
+      }
+    }
+    this.dialog.open(ErrorDialogComponent, this.dialogConfig);
   }
 }
