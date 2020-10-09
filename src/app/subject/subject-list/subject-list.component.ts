@@ -46,7 +46,7 @@ export class SubjectListComponent implements OnInit, AfterViewInit {
 
     public getSubjects = () => {
       let params = new HttpParams().set("pageNumber",this.currentPage.toString()).set("pageSize", this.pageSize.toString());
-      this.repoService.getData('api/v1/subjects', params)
+      this.repoService.getData('/subjects', params)
       .subscribe(res => {
         const { subjects, totalCount, currentPage  } = res as SubjectList;
         this.dataSource.data = subjects;

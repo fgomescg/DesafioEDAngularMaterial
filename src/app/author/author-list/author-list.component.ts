@@ -47,7 +47,7 @@ export class AuthorListComponent implements OnInit, AfterViewInit {
 
     public getAuthors = () => {
       let params = new HttpParams().set("pageNumber",this.currentPage.toString()).set("pageSize", this.pageSize.toString());
-      this.repoService.getData('api/v1/authors', params)
+      this.repoService.getData('/authors', params)
       .subscribe(res => {
         const { authors, totalCount, currentPage  } = res as AuthorList;
         this.dataSource.data = authors;

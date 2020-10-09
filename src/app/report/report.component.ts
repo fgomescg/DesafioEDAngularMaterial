@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EnvironmentUrlService } from '@app/_services/environment-url.service';
+import { MaterialModule } from '../material/material.module';
 
 @Component({
   selector: 'app-report',

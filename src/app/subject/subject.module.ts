@@ -5,7 +5,6 @@ import { SubjectCreateComponent } from './subject-create/subject-create.componen
 import { SubjectUpdateComponent } from './subject-update/subject-update.component';
 import { SubjectDeleteComponent } from './subject-delete/subject-delete.component';
 import { SubjectRoutingModule } from './subject-routing/subject-routing.module';
-import { MaterialModule } from './../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module'
 
@@ -14,7 +13,6 @@ import { SharedModule } from '@app/shared/shared.module'
   imports: [
     CommonModule,
     SubjectRoutingModule,
-    MaterialModule,
     ReactiveFormsModule,
     SharedModule
   ]

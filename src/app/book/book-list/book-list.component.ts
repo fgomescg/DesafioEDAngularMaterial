@@ -42,7 +42,7 @@ export class BookListComponent implements OnInit, AfterViewInit {
 
     public getBooks = () => {
         let params = new HttpParams().set("pageNumber", this.currentPage.toString()).set("pageSize", this.pageSize.toString());
-        this.repoService.getData('api/v1/books', params)
+        this.repoService.getData('/books', params)
             .subscribe(res => {
                 const { books, totalCount, currentPage } = res as BookList;
                 this.dataSource.data = books;

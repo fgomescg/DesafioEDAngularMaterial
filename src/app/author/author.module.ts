@@ -5,7 +5,6 @@ import { AuthorCreateComponent } from './author-create/author-create.component';
 import { AuthorUpdateComponent } from './author-update/author-update.component';
 import { AuthorDeleteComponent } from './author-delete/author-delete.component';
 import { AuthorRoutingModule } from './author-routing/author-routing.module';
-import { MaterialModule } from './../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module'
 
@@ -14,7 +13,6 @@ import { SharedModule } from '@app/shared/shared.module'
   imports: [
     CommonModule,
     AuthorRoutingModule,
-    MaterialModule,
     ReactiveFormsModule,
     SharedModule
   ]
